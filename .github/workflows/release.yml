@@ -99,16 +99,29 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: iscc installer.iss
 
-      # ── Upload artifacts ─────────────────────────────────────────────────
-      - name: 📦 Upload artifacts
+      - name: 🤖 Upload Android APK
+        if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-${{ env.VERSION }}
-          path: |
-            build/**/*.apk
-            build/**/*.zip
-            Output/*.exe
+          name: Android-APK-${{ env.VERSION }}
+          path: build/app/outputs/flutter-apk/*.apk
+          retention-days: 7
 
+      - name: 🌐 Upload Web Zip
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Web-Build-${{ env.VERSION }}
+          path: "*.zip"
+          retention-days: 7
+
+      - name: 🪟 Upload Windows Installer
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-EXE-${{ env.VERSION }}
+          path: Output/*.exe
+          retention-days: 7
   # ── Deploy Web to Vercel ─────────────────────────────────────────────────
   deploy-web:
     needs: build
