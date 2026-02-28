@@ -10,8 +10,8 @@
   </p>
 
   <p>
-    <a href="#"><img src="https://img.shields.io/badge/Flutter-3.19+-02569B?style=social&logo=flutter&logoColor=02569B" alt="Flutter" /></a>&nbsp;
-    <a href="#"><img src="https://img.shields.io/badge/Dart-3.0+-0175C2?style=social&logo=dart&logoColor=0175C2" alt="Dart" /></a>&nbsp;
+    <a href="#"><img src="https://img.shields.io/badge/Flutter-3.41.2-02569B?style=social&logo=flutter&logoColor=02569B" alt="Flutter" /></a>&nbsp;
+    <a href="#"><img src="https://img.shields.io/badge/Dart-3.11+-0175C2?style=social&logo=dart&logoColor=0175C2" alt="Dart" /></a>&nbsp;
     <a href="#"><img src="https://img.shields.io/badge/License-MIT-4caf50?style=social&logo=opensourceinitiative&logoColor=4caf50" alt="License" /></a>
   </p>
 
@@ -60,7 +60,7 @@ Built for **performance and scalability**, this project emphasizes clean code pr
 <br>
 
 <div align="center">
-  <img src="assets/images/splashImg.png" alt="App Logo" width="150" style="border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);" />
+  <img src="assets/icons/appIcon_.png" alt="App Logo" width="150" style="border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);" />
   <br>
   <i><b>Official App Icon</b></i>
 </div>
@@ -73,21 +73,21 @@ Built for **performance and scalability**, this project emphasizes clean code pr
   <tr>
     <td width="50%" valign="top">
       <h3>🚀 Feature-First Architecture</h3>
-      <p>Organized by module (Home, Appointments, Profile) for maximum scalability and low coupling, ensuring the codebase is ready for production teams.</p>
+      <p>Organized by module (Home, Onboarding, Profile) for maximum scalability and low coupling, ensuring the codebase is production-ready.</p>
     </td>
     <td width="50%" valign="top">
       <h3>🛣️ Declarative Routing</h3>
-      <p>Powered by <code>go_router</code> for robust shell navigation and seamless deep-linking support across all mobile and web platforms.</p>
+      <p>Powered by <code>go_router</code> for robust shell navigation and seamless deep-linking support across mobile and web platforms.</p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h3>📊 High-Fidelity Graphics</h3>
-      <p>Optimized <code>fl_chart</code> implementation with custom gradient overlays and elastic spring animations for a premium data visualization experience.</p>
+      <h3>📊 Native Data Morphing</h3>
+      <p>High-performance <code>fl_chart</code> implementation leveraging native data morphing and elastic interpolations for a premium visualization experience.</p>
     </td>
     <td width="50%" valign="top">
       <h3>🌊 Fluid Micro-Interactions</h3>
-      <p>Custom <code>AnimatedPositioned</code> logic and shared-element Hero transitions that define a cohesive and engaging user journey.</p>
+      <p>Custom <code>AnimatedSwitcher</code> logic with silky-smooth <code>easeOutQuart</code> transitions that define a cohesive and premium user journey.</p>
     </td>
   </tr>
 </table>
@@ -102,9 +102,9 @@ Built for **performance and scalability**, this project emphasizes clean code pr
 
   | Core Tech | UI Utilities |
   | :--- | :--- |
-  | **Flutter SDK 3.19+** | `fl_chart` (Visualization) |
-  | **Dart 3.0+** | `go_router` (Navigation) |
-  | **Production Architecture** | `google_fonts` (Typography) |
+  | **Flutter SDK 3.41.2** | `fl_chart` (Data Morphing) |
+  | **Dart 3.11+** | `go_router` (Navigation) |
+  | **Feature-First Pattern** | `google_fonts` (Typography) |
 
 </div>
 
