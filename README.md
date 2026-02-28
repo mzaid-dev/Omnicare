@@ -19,12 +19,20 @@
 
   **Get the Latest Production Build**
    <br>
-  <a href="https://github.com/mzaid-dev/omnicare/releases">
+  <a href="https://github.com/mzaid-dev/omnicare/releases/latest/download/omnicare-android.apk">
     <img src="https://img.shields.io/badge/Android-APK-3DDC84?style=social&logo=android&logoColor=3DDC84" height="24" alt="Download APK" />
   </a>
   &nbsp;
-  <a href="https://github.com/mzaid-dev/omnicare/releases">
+  <a href="https://github.com/mzaid-dev/omnicare/releases/latest/download/omnicare-setup.exe">
     <img src="https://img.shields.io/badge/Windows-EXE-0078D6?style=social&logo=windows&logoColor=0078D6" height="24" alt="Download Windows" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/mzaid-dev/omnicare/releases/latest/download/omnicare-web.zip">
+    <img src="https://img.shields.io/badge/Web-ZIP-0052CC?style=social&logo=googlechrome&logoColor=0052CC" height="24" alt="Download Web ZIP" />
+  </a>
+  &nbsp;
+  <a href="https://omnicare.vercel.app/">
+    <img src="https://img.shields.io/badge/Web-Live_Preview-FF4B4B?style=social&logo=vercel&logoColor=000000" height="24" alt="Live Preview" />
   </a>
 
 
