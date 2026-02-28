@@ -68,6 +68,8 @@ flutter_native_splash:
   image: "assets/icons/appIcon.png"
   android: true
   web: true
+  ios: false
+  windows: false
 
 flutter:
   uses-material-design: true
