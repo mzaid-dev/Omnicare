@@ -52,8 +52,8 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           APP_NAME=${{ github.event.repository.name }}
-          mv build/app/outputs/flutter-apk/app-release.apk \
-          build/app/outputs/flutter-apk/${APP_NAME}-${VERSION}-android.apk
+          cp build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/${APP_NAME}-android.apk
+          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/${APP_NAME}-${VERSION}-android.apk
 
       # ── Web (ubuntu) ─────────────────────────────────────────────────────
       - name: 🌐 Build Web
@@ -65,6 +65,7 @@ jobs:
         run: |
           APP_NAME=${{ github.event.repository.name }}
           cd build/web
+          zip -r ../../${APP_NAME}-web.zip .
           zip -r ../../${APP_NAME}-${VERSION}-web.zip .
 
       # ── Windows EXE (windows) ─────────────────────────────────────────────
@@ -86,7 +87,7 @@ jobs:
           AppName=$APP_NAME
           AppVersion=$VERSION
           DefaultDirName={pf}\$APP_NAME
-          OutputBaseFilename=$APP_NAME-$VERSION-setup
+          OutputBaseFilename=$APP_NAME-setup
           Compression=lzma
           SolidCompression=yes
 
