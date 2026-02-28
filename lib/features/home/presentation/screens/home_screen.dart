@@ -62,39 +62,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       index: 2,
                       child: ChartContainer(selectedOrganIndex: selectedOrganIndex),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     _buildAnimatedItem(
                       index: 3,
                       child: Row(
                         children: [
                           Expanded(
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 500),
-                              transitionBuilder: _bounceTransition,
-                              child: SmallChartCard(
-                                key: ValueKey('card2_$selectedOrganIndex'),
-                                title: organ.card2Title,
-                                value: organ.card2Value,
-                                data: organ.card2Data,
-                                icon: organ.card2Icon,
-                                accent: organ.accent,
-                              ),
+                            child: SmallChartCard(
+                              title: organ.card2Title,
+                              value: organ.card2Value,
+                              data: organ.card2Data,
+                              icon: organ.card2Icon,
+                              accent: organ.accent,
                             ),
                           ),
-                          const SizedBox(width: 12),
+                          const SizedBox(width: 14),
                           Expanded(
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 580),
-                              transitionBuilder: _bounceTransition,
-                              child: SmallChartCard(
-                                key: ValueKey('card3_$selectedOrganIndex'),
-                                title: organ.card3Title,
-                                value: organ.card3Value,
-                                data: organ.card3Data,
-                                icon: organ.card3Icon,
-                                accent: organ.accent,
-                                useTrackedChart: true,
-                              ),
+                            child: SmallChartCard(
+                              title: organ.card3Title,
+                              value: organ.card3Value,
+                              data: organ.card3Data,
+                              icon: organ.card3Icon,
+                              accent: organ.accent,
+                              useTrackedChart: true,
                             ),
                           ),
                         ],

@@ -61,9 +61,20 @@ class _OrganDisplayState extends State<OrganDisplay>
         switchInCurve: Curves.easeOutQuart,
         switchOutCurve: Curves.easeInQuart,
         transitionBuilder: (child, animation) {
+          final offsetAnimation = Tween<Offset>(
+            begin: const Offset(0, 0.05),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOutQuart,
+          ));
+
           return FadeTransition(
             opacity: animation,
-            child: child,
+            child: SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            ),
           );
         },
         child: AnimatedBuilder(

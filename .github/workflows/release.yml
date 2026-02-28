@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     tags:
       - 'v*'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -130,6 +131,12 @@ jobs:
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
+
+      - name: 🔍 Check Vercel Secrets
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then echo "Error: VERCEL_TOKEN is missing"; exit 1; fi
+          if [ -z "${{ secrets.VERCEL_ORG_ID }}" ]; then echo "Error: VERCEL_ORG_ID is missing"; exit 1; fi
+          if [ -z "${{ secrets.VERCEL_PROJECT_ID }}" ]; then echo "Error: VERCEL_PROJECT_ID is missing"; exit 1; fi
 
       - name: 🔖 Extract version
         shell: bash

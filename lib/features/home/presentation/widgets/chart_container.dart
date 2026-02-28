@@ -11,33 +11,7 @@ class ChartContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 550),
-      transitionBuilder: (child, animation) {
-        final scale = Tween<double>(begin: 0.82, end: 1.0).animate(
-          CurvedAnimation(parent: animation, curve: Curves.elasticOut),
-        );
-        return FadeTransition(
-          opacity: CurvedAnimation(parent: animation, curve: Curves.easeOutQuart),
-          child: ScaleTransition(scale: scale, child: child),
-        );
-      },
-      child: _ChartCard(
-        key: ValueKey<int>(selectedOrganIndex),
-        organIndex: selectedOrganIndex,
-      ),
-    );
-  }
-}
-
-class _ChartCard extends StatelessWidget {
-  final int organIndex;
-
-  const _ChartCard({super.key, required this.organIndex});
-
-  @override
-  Widget build(BuildContext context) {
-    final organ = OrganRepository.allOrgans[organIndex];
+    final organ = OrganRepository.allOrgans[selectedOrganIndex];
     final Color accent = organ.accent;
 
     return Container(
@@ -49,7 +23,10 @@ class _ChartCard extends StatelessWidget {
         child: Stack(
           children: [
             Positioned.fill(
-              child: CustomLineChart(spots: organ.card1Data, lineColor: accent),
+              child: CustomLineChart(
+                spots: organ.card1Data,
+                lineColor: accent,
+              ),
             ),
             Positioned(
               top: 16,
@@ -58,7 +35,8 @@ class _ChartCard extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
                       color: accent.withOpacity(0.12),
@@ -68,11 +46,33 @@ class _ChartCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Flexible(
-                    child: Text(
-                      organ.card1Title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.cardTitle.copyWith(fontSize: 13),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 400),
+                      switchInCurve: Curves.easeOutQuart,
+                      switchOutCurve: Curves.easeInQuart,
+                      transitionBuilder: (child, animation) {
+                        final slideAnimation = Tween<Offset>(
+                          begin: const Offset(0, 0.05),
+                          end: Offset.zero,
+                        ).animate(CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeOutQuart,
+                        ));
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position: slideAnimation,
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: Text(
+                        organ.card1Title,
+                        key: ValueKey('title_${organ.card1Title}'),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.cardTitle.copyWith(fontSize: 13),
+                      ),
                     ),
                   ),
                 ],
@@ -81,9 +81,31 @@ class _ChartCard extends StatelessWidget {
             Positioned(
               bottom: 14,
               right: 16,
-              child: Text(
-                organ.card1Value,
-                style: AppTextStyles.cardValue.copyWith(fontSize: 28),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                switchInCurve: Curves.easeOutQuart,
+                switchOutCurve: Curves.easeInQuart,
+                transitionBuilder: (child, animation) {
+                  final slideAnimation = Tween<Offset>(
+                    begin: const Offset(0, 0.08),
+                    end: Offset.zero,
+                  ).animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutQuart,
+                  ));
+                  return FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(
+                      position: slideAnimation,
+                      child: child,
+                    ),
+                  );
+                },
+                child: Text(
+                  organ.card1Value,
+                  key: ValueKey('value_${organ.card1Value}'),
+                  style: AppTextStyles.cardValue.copyWith(fontSize: 28),
+                ),
               ),
             ),
           ],
@@ -92,3 +114,4 @@ class _ChartCard extends StatelessWidget {
     );
   }
 }
+

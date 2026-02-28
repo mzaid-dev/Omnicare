@@ -26,15 +26,15 @@ class CustomBarChart extends StatelessWidget {
               BarChartRodData(
                 toY: entry.value,
                 color: barColor.withOpacity(0.8),
-                width: 14, // Nice and thick like the design
-                borderRadius: BorderRadius.circular(6), // Rounded caps
+                width: 14,
+                borderRadius: BorderRadius.circular(6),
               ),
             ],
           );
         }).toList(),
       ),
-      duration: const Duration(milliseconds: 500), // Smooth morphing
-      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOutQuart,
     );
   }
 }

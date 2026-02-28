@@ -57,8 +57,8 @@ class CustomLineChart extends StatelessWidget {
           ),
         ],
       ),
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 650),
+      curve: Curves.easeOutQuart,
     );
   }
 }

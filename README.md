@@ -60,7 +60,7 @@ Built for **performance and scalability**, this project emphasizes clean code pr
 <br>
 
 <div align="center">
-  <img src="assets/icons/appIcon.png" alt="App Logo" width="150" style="border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);" />
+  <img src="assets/images/splashImg.png" alt="App Logo" width="150" style="border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);" />
   <br>
   <i><b>Official App Icon</b></i>
 </div>

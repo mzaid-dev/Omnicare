@@ -41,8 +41,8 @@ class TrackedBarChart extends StatelessWidget {
           );
         }).toList(),
       ),
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOutQuart,
     );
   }
 }
