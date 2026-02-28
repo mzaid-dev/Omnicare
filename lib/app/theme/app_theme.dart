@@ -17,17 +17,12 @@ class AppTheme {
         surface: AppColors.background
 
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: AppTextStyles.displayLarge,
+        titleTextStyle: AppTextStyles.heading1,
       ),
-
-      textTheme: const TextTheme(
-        displayLarge: AppTextStyles.displayLarge
-      ),
-
     );
   }
 }

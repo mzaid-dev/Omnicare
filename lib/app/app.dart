@@ -21,7 +21,7 @@ class OmnicareApp extends StatelessWidget {
           return child;
         }
         final deviceFrame = DeviceFrame(
-          device: Devices.ios.iPhone13ProMax,
+          device: Devices.ios.iPhone15ProMax,
           isFrameVisible: true,
           orientation: Orientation.portrait,
           screen: child,

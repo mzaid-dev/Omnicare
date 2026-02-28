@@ -1,0 +1,166 @@
+name: OmniCare Production Release
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      FLUTTER_VERSION: "3.19.0"
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔖 Extract version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION=${GITHUB_SHA::7}
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🖥️ Enable desktop platforms
+        run: flutter config --enable-windows-desktop
+
+      # ── Android APK (ubuntu) ─────────────────────────────────────────────
+      - name: 🤖 Build Android APK
+        if: matrix.os == 'ubuntu-latest'
+        run: flutter build apk --release
+
+      - name: 🤖 Rename Android APK
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          APP_NAME=${{ github.event.repository.name }}
+          mv build/app/outputs/flutter-apk/app-release.apk \
+          build/app/outputs/flutter-apk/${APP_NAME}-${VERSION}-android.apk
+
+      # ── Web (ubuntu) ─────────────────────────────────────────────────────
+      - name: 🌐 Build Web
+        if: matrix.os == 'ubuntu-latest'
+        run: flutter build web --release --base-href /
+
+      - name: 🌐 Zip Web build
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          APP_NAME=${{ github.event.repository.name }}
+          cd build/web
+          zip -r ../../${APP_NAME}-${VERSION}-web.zip .
+
+      # ── Windows EXE (windows) ─────────────────────────────────────────────
+      - name: 🪟 Build Windows
+        if: matrix.os == 'windows-latest'
+        run: flutter build windows --release
+
+      - name: 🪟 Install Inno Setup
+        if: matrix.os == 'windows-latest'
+        run: choco install innosetup -y
+
+      - name: 🪟 Create Inno Setup script
+        if: matrix.os == 'windows-latest'
+        run: |
+          $APP_NAME = "${{ github.event.repository.name }}"
+          $VERSION = "$env:VERSION"
+          @"
+          [Setup]
+          AppName=$APP_NAME
+          AppVersion=$VERSION
+          DefaultDirName={pf}\$APP_NAME
+          OutputBaseFilename=$APP_NAME-$VERSION-setup
+          Compression=lzma
+          SolidCompression=yes
+
+          [Files]
+          Source: "build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: recursesubdirs
+          "@ | Out-File installer.iss -Encoding ASCII
+
+      - name: 🪟 Compile installer
+        if: matrix.os == 'windows-latest'
+        run: iscc installer.iss
+
+      # ── Upload artifacts ─────────────────────────────────────────────────
+      - name: 📦 Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-${{ env.VERSION }}
+          path: |
+            build/**/*.apk
+            build/**/*.zip
+            Output/*.exe
+
+  # ── Deploy Web to Vercel ─────────────────────────────────────────────────
+  deploy-web:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔖 Extract version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION=${GITHUB_SHA::7}
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.19.0"
+          cache: true
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🌐 Build Flutter Web
+        run: flutter build web --release --base-href /
+
+      - name: 🚀 Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+
+  # ── GitHub Release (tag pushes only) ─────────────────────────────────────
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build, deploy-web]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: 🏷️ Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true
